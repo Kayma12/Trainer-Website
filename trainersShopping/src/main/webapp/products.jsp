@@ -12,7 +12,7 @@
 
 ${trainers}
 
-${sessionScope.firstName}
+${sessionScope.firstNa5me}
 
   <h2>Products</h2>
 
@@ -24,13 +24,14 @@ ${sessionScope.firstName}
          <th>Image</th>
         <th>Quantity In Stock</th>
         <th>Price</th>
+        <th>Add To Cart</th>
     </tr>
     <c:forEach items="${trainers}" var="trainer" >
         <tr>
           <td>${trainer.trainerId}</td>
             <td>${trainer.trainerDescription}</td>
             <td>
-			<img src="${pageContext.request.contextPath }/productImages/${trainer.trainerDescription}1.JPG" width="120">
+			<img src="${pageContext.request.contextPath }/productImages/${trainer.trainerDescription}.jpg" width="120">
 				</td>
             <td>${trainer.quantityInStock}</td>
              <td>£${trainer.priceOfTrainer}</td>

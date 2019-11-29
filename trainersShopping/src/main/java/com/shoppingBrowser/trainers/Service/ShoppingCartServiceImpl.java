@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,12 +29,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         this.trainerRepo = trainerRepo;
     }
 
-    /**
-     * If trainer is in the map just increment quantity by 1.
-     * If trainer is not in the map with, add it with quantity 1
-     *
-     * @param trainer
-     */
+  
     @Override
     public void addProduct(Trainer trainer) {
         if (trainers.containsKey(trainer)) {
@@ -61,25 +57,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         }
     }
 
-    /**
-     * @return unmodifiable copy of the map
-     */
+   
     @Override
     public Map<Trainer, Integer> getProductsInCart() {
         return (trainers);
     }
 
     /**
-     * Checkout will rollback if there is not enough of some trainer in stock
+     * Checkout will rollback if there is not enough of same trainer in stock
      *
      * @throws NotEnoughProductsInStockException
      */
     @Override
     public void checkout() throws NotEnoughProductsInStockException {
         Trainer trainer;
+        Optional<Trainer> trainopt;
         for (Map.Entry<Trainer, Integer> entry : trainers.entrySet()) {
             // Refresh quantity for every trainer before checking
-            trainer = trainerRepo.findByTrainerId(entry.getKey().getTrainerId());
+        	
+        	
+            trainopt = trainerRepo.findById((entry.getKey().getTrainerId()));
+            trainer = trainopt.get();
             if (trainer.getQuantityInStock() < entry.getValue())
                 throw new NotEnoughProductsInStockException(trainer);
             entry.getKey().setQuantityInStock(trainer.getQuantityInStock() - entry.getValue());

@@ -18,23 +18,26 @@
         <th>Quantity</th>
         <th>Price</th>
     </tr>
+ 
     <c:forEach items="${trainers.entrySet()}" var="trainer" >
-    ${trainers.entrySet().getKey().getTrainerId}
-       <%--  <tr>
-          <td>${trainer.getkey().trainerId}</td>
-            <td>${trainer.getKey().getDescription}</td>
+    
+        <tr>
+         
+          <td>${trainer.getKey().trainerId}</td>
+             <td>${trainer.getKey().trainerDescription}</td>
             
             <td>${trainer.getValue()}</td>
-             <td>£${trainer.getKey().price}</td>
-              <td> <a href="@{'/shoppingCart/addProduct/{id}'(id=${trainer.trainerId})}">
+             <td>£${trainer.getKey().priceOfTrainer}</td>
+              <td> <a href="/shoppingCart/removeProduct/{id}'(id=${trainer.getKey().trainerId})">
             
             	 <button type="button">Remove</button>
             
        
             </a> 
-            </td>
+            </td> 
+            
              
-        </tr> --%>
+        </tr> 
     </c:forEach>
 </table>
  
